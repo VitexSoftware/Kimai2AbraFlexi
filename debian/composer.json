@@ -14,7 +14,7 @@
         "vendor-dir": "/var/lib/abraflexi-kimai-importer"
     },
     "require": {
-        "fiteco-group/kimai-client": "0.2.2",
+        "fiteco-group/kimai-client": "*",
         "deb/abraflexi": "*",
         "guzzlehttp/psr7": "*",
         "phpoffice/phpspreadsheet": "*"
