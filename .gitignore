@@ -14,3 +14,6 @@
 /debian/abraflexi-kimai-importer.substvars
 /debian/files
 /debian/debhelper-build-stamp
+/debian/multiflexi-abraflexi-kimai-importer.debhelper.log
+/debian/multiflexi-abraflexi-kimai-importer.substvars
+/debian/multiflexi-abraflexi-kimai-importer/

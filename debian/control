@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: "Vítězslav Dvořák" <info@vitexsoftware.cz>
 Build-Depends: debhelper (>=11~),composer
 Standards-Version: 4.1.4
-Homepage: https://github.com/sizek-cz/Kimai2AbraFlexi
+Homepage: https://github.com/VitexSoftware/Kimai2AbraFlexi/settings
 
 Package: abraflexi-kimai-importer
 Multi-Arch: foreign
@@ -13,4 +13,13 @@ Suggests: abraflexi-server,php-abraflexi-config, abraflexi-digest, abraflexi-mat
 Architecture: all
 Description: issue AbraFlexi invoice using Kimai Time Entries
  Commandline tool i used to issue AbraFlexi invoice using Kimai API. Process all 
+ time records within given scope into invoice with items grouped by Clients.
+
+Package: multiflexi-abraflexi-kimai-importer
+Depends: abraflexi-kimai-importer, multiflexi
+Architecture: all
+Section: office
+Priority: optional
+Description: Add Kimai to AbraFlexi invoice issuer to MultiFlexi
+ Issue AbraFlexi invoice using Kimai API. Process all.
  time records within given scope into invoice with items grouped by Clients.
