@@ -10,8 +10,8 @@
     "requirements": null,
     "ociimage": "",
     "version": "",
-    "code": "RAFLEXI",
     "uuid": "89e98c33-c6a3-436e-963f-c35ba04e83ae",
+    "topics": "Kimai,AbraFlexi,Importer,Invoice,Generator",
     "environment": {
         "ABRAFLEXI_CC": {
             "type": "text",
