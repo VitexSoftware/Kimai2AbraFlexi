@@ -17,3 +17,4 @@
 /debian/multiflexi-abraflexi-kimai-importer.debhelper.log
 /debian/multiflexi-abraflexi-kimai-importer.substvars
 /debian/multiflexi-abraflexi-kimai-importer/
+/.php-cs-fixer.cache

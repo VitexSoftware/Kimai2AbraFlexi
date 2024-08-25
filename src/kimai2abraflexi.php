@@ -11,7 +11,7 @@ namespace Kimai2AbraFlexi;
 
 require_once '../vendor/autoload.php';
 
-define('APP_NAME','Kimai2AbraFlexi');
+define('APP_NAME', 'Kimai2AbraFlexi');
 if (file_exists(dirname(__DIR__) . '/.env')) {
     \Ease\Shared::instanced()->loadConfig(dirname(__DIR__) . '/.env', true);
 }

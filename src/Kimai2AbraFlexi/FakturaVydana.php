@@ -10,10 +10,10 @@ use Ease\Shared;
  * @author Vítězslav Dvořák <info@vitexsoftware.cz>
  * @copyright  2021-2022 Vitex Software
  */
-class FakturaVydana extends \AbraFlexi\FakturaVydana {
-
+class FakturaVydana extends \AbraFlexi\FakturaVydana
+{
     /**
-     * 
+     *
      * @var \AbraFlexi\Cenik
      */
     private $cenik;
@@ -23,25 +23,27 @@ class FakturaVydana extends \AbraFlexi\FakturaVydana {
      *
      * @param array $options Connection settings override
      */
-    public function __construct($init = null, $options = []) {
+    public function __construct($init = null, $options = [])
+    {
         parent::__construct($init, $options);
         if (!array_key_exists('typDokl', $options)) {
             $this->setDataValue('typDokl', self::code(\Ease\Functions::cfg('ABRAFLEXI_TYP_FAKTURY')));
         }
-        if(\Ease\Functions::cfg('ABRAFLEXI_SEND') == 'True'){
-            $this->setDataValue('stavMailK','stavMail.odeslat');
+        if(\Ease\Functions::cfg('ABRAFLEXI_SEND') == 'True') {
+            $this->setDataValue('stavMailK', 'stavMail.odeslat');
         }
         $this->cenik = new \AbraFlexi\Cenik();
     }
 
     /**
      * Format milliseconds time
-     * 
+     *
      * @param double $milliseconds
-     * 
+     *
      * @return string
      */
-    public static function formatMilliseconds($milliseconds) {
+    public static function formatMilliseconds($milliseconds)
+    {
         $seconds = floor($milliseconds / 1000);
         $minutes = floor($seconds / 60);
         $hours = floor($minutes / 60);
@@ -56,12 +58,13 @@ class FakturaVydana extends \AbraFlexi\FakturaVydana {
 
     /**
      * Format seconds time
-     * 
+     *
      * @param double $seconds
-     * 
+     *
      * @return string
      */
-    public static function formatSeconds($seconds) {
+    public static function formatSeconds($seconds)
+    {
         $minutes = floor($seconds / 60);
         $hours = floor($minutes / 60);
         $secs = $seconds % 60;
@@ -73,10 +76,11 @@ class FakturaVydana extends \AbraFlexi\FakturaVydana {
     }
 
     /**
-     * 
+     *
      * @param array $timeEntries
      */
-    public function takeItemsFromArray($timeEntries) {
+    public function takeItemsFromArray($timeEntries)
+    {
         $prices = $this->cenik->getColumnsFromAbraFlexi(['nazev','kod'], ['limit' => 0], 'nazev');
         foreach ($timeEntries as $projectName => $projectTimeEntries) {
             $projectSum = _('Project') . ': ' . $projectName . ' ' . _('Duration') . ': ' . round(array_sum($projectTimeEntries) / 3600, 3) . ' h';

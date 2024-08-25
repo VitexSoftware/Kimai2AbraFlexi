@@ -19,16 +19,17 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  *
  * @author vitex
  */
-class Reporter {
-
+class Reporter
+{
     /**
      * Prepare data for CSV Report
-     * 
-     * @param array $timeEntries 
-     * 
+     *
+     * @param array $timeEntries
+     *
      * @return array data for CSV export
      */
-    public static function csvData($timeEntries) {
+    public static function csvData($timeEntries)
+    {
         $columns = ['project', 'name', 'hours', 'duration'];
         $reportData[] = array_combine($columns, $columns);
         foreach ($timeEntries as $projectName => $projectTimeEntries) {
@@ -46,12 +47,13 @@ class Reporter {
 
     /**
      * Convert CSV data to CSV multiline string
-     * 
+     *
      * @param array $timeEntries
-     * 
+     *
      * @return string
      */
-    public static function csvReport($timeEntries) {
+    public static function csvReport($timeEntries)
+    {
         $csvData = self::csvData($timeEntries);
         $csvRows[] = implode(';', (current($csvData)));
         foreach ($csvData as $dataRow) {
@@ -62,12 +64,13 @@ class Reporter {
 
     /**
      * Convert CSV data to CSV multiline string
-     * 
+     *
      * @param array $timeEntries
-     * 
+     *
      * @return string
      */
-    public static function xlsReport($timeEntries, $fromto) {
+    public static function xlsReport($timeEntries, $fromto)
+    {
         $csvData = self::csvData($timeEntries);
         $spreadsheet = self::spreadSheat("Timesheet Report", $fromto);
         self::header($spreadsheet, array_keys(current($csvData)));
@@ -79,12 +82,13 @@ class Reporter {
 
     /**
      * CSV Report with sums by project
-     * 
+     *
      * @param  array $timeEntries
-     * 
+     *
      * @return string
      */
-    public static function cvsReportPerProject($timeEntries) {
+    public static function cvsReportPerProject($timeEntries)
+    {
         $csvRows = [];
         $columns = ['project', 'hours', 'duration'];
         $reportData[] = array_combine($columns, $columns);
@@ -104,12 +108,13 @@ class Reporter {
 
     /**
      * CSV Report with sums by project
-     * 
+     *
      * @param  array $timeEntries
-     * 
+     *
      * @return string
      */
-    public static function xlsReportPerProject($timeEntries, $fromto) {
+    public static function xlsReportPerProject($timeEntries, $fromto)
+    {
         $columns = ['project', 'hours', 'duration'];
         $reportData[] = array_combine($columns, $columns);
         foreach ($timeEntries as $projectName => $projectTimeEntries) {
@@ -128,12 +133,13 @@ class Reporter {
     }
 
     /**
-     * 
+     *
      * @param string $spreadsheet
-     * 
+     *
      * @return string
      */
-    public static function xslsxString($spreadsheet) {
+    public static function xslsxString($spreadsheet)
+    {
         $writer = new Xlsx($spreadsheet);
         $filename = sys_get_temp_dir() . '/' . Functions::randomString() . '.xlsx';
         $writer->save($filename);
@@ -143,14 +149,15 @@ class Reporter {
     }
 
     /**
-     * Spreadsheet 
-     * 
+     * Spreadsheet
+     *
      * @param string $title
      * @param string $fromto
-     * 
+     *
      * @return Spreadsheet
      */
-    public static function spreadSheat($title, $fromto) {
+    public static function spreadSheat($title, $fromto)
+    {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getProperties()
                 ->setCreator(\Ease\Shared::appName())
@@ -168,11 +175,12 @@ class Reporter {
 
     /**
      * Establish report header
-     * 
+     *
      * @param Spreadsheet $spreadSheet
      * @param array $labels
      */
-    public static function header($spreadSheet, $labels) {
+    public static function header($spreadSheet, $labels)
+    {
         $spreadSheet->getDefaultStyle()
                 ->getFont()
                 ->setName('Arial')
@@ -187,11 +195,12 @@ class Reporter {
 
     /**
      * Fill report with values
-     * 
+     *
      * @param Spreadsheet $spreadSheet
      * @param array $data
      */
-    public static function values($spreadSheet, $data) {
+    public static function values($spreadSheet, $data)
+    {
         $spreadSheet->getDefaultStyle()
                 ->getFont()
                 ->setColor(new Color(Color::COLOR_BLACK));
@@ -206,12 +215,13 @@ class Reporter {
 
     /**
      * Add times sum
-     * 
+     *
      * @param Spreadsheet $spreadSheet
      * @param int $col
      * @param array $data
      */
-    public static function addSum($spreadSheet, $col, $data) {
+    public static function addSum($spreadSheet, $col, $data)
+    {
         $c = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col);
         $spreadSheet->getActiveSheet()->setCellValue($c . (count($data) + 2), '=SUM(' . $c . '2:' . $c . (count($data) + 1) . ')');
     }

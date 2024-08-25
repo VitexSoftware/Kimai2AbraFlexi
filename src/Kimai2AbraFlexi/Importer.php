@@ -20,23 +20,23 @@ use Ease\Functions;
  *
  * @author vitex
  */
-class Importer extends FakturaVydana {
-
+class Importer extends FakturaVydana
+{
     /**
      *
-     * @var DateTime 
+     * @var DateTime
      */
     public $since = null;
 
     /**
      *
-     * @var DateTime 
+     * @var DateTime
      */
     public $until = null;
 
     /**
      *
-     * @var array<int> 
+     * @var array<int>
      */
     public $projects = null;
 
@@ -47,13 +47,13 @@ class Importer extends FakturaVydana {
     public $me = [];
 
     /**
-     * 
+     *
      * @var \Fiteco\KimaiClient\Configuration
      */
     private $config;
 
     /**
-     * 
+     *
      * @var \Fiteco\KimaiClient\Api\TimesheetApi
      */
     private $kimaiTimesheets;
@@ -63,11 +63,12 @@ class Importer extends FakturaVydana {
     private $kimaiCustomers;
 
     /**
-     * 
+     *
      * @param string $init
      * @param array $options
      */
-    public function __construct($init = null, $options = []) {
+    public function __construct($init = null, $options = [])
+    {
         $this->defaultUrlParams;
         parent::__construct($init, $options);
         $this->scopeToInterval(Functions::cfg('KIMAI_SCOPE', 'last_month'));
@@ -81,10 +82,11 @@ class Importer extends FakturaVydana {
 
     /**
      * Obtain Projects
-     * 
-     * @return array 
+     *
+     * @return array
      */
-    public function getProjects() {
+    public function getProjects()
+    {
         $projects = [];
         $this->kimaiProjects = new \Fiteco\KimaiClient\Api\ProjectApi(new \GuzzleHttp\Client(), $this->config);
         try {
@@ -103,10 +105,11 @@ class Importer extends FakturaVydana {
 
     /**
      * Obtain Customers
-     * 
+     *
      * @return array
      */
-    public function getCustomers() {
+    public function getCustomers()
+    {
         $customers = [];
         $this->kimaiCustomers = new \Fiteco\KimaiClient\Api\CustomerApi(new \GuzzleHttp\Client(), $this->config);
         try {
@@ -123,11 +126,12 @@ class Importer extends FakturaVydana {
 
     /**
      * Prepare processing interval
-     * 
-     * @param string $scope 
+     *
+     * @param string $scope
      * @throws Exception
      */
-    public function scopeToInterval($scope) {
+    public function scopeToInterval($scope)
+    {
         switch ($scope) {
             case 'current_month':
                 $this->since = new DateTime("first day of this month");
@@ -183,10 +187,11 @@ class Importer extends FakturaVydana {
     }
 
     /**
-     * 
+     *
      * @return FakturaVydana
      */
-    public function import() {
+    public function import()
+    {
         $this->logBanner('Import Initiated. From: ' . $this->since->format('c') . ' To: ' . $this->until->format('c'));
 
         $invoiceItems = [];
@@ -242,12 +247,13 @@ class Importer extends FakturaVydana {
 
     /**
      * One page of Report
-     * 
+     *
      * @param int $pageno
-     * 
+     *
      * @return array
      */
-    public function getDetailsPage($pageno = 1) {
+    public function getDetailsPage($pageno = 1)
+    {
         $records = [];
         try {
             $recordsRaw = $this->kimaiTimesheets->apiTimesheetsGet(null, null, null, null, null, null, null, $pageno, 100, null, null, null, $this->since, $this->until);
@@ -265,13 +271,14 @@ class Importer extends FakturaVydana {
     }
 
     /**
-     * Get full set of results 
-     * 
+     * Get full set of results
+     *
      * @param string $workspace
-     * 
+     *
      * @return array
      */
-    public function getAllDetailPages() {
+    public function getAllDetailPages()
+    {
         $result = $this->getDetailsPage();
         /*
           $pages = ceil($result['total_count'] / $result['per_page']);
@@ -298,10 +305,11 @@ class Importer extends FakturaVydana {
     }
 
     /**
-     * 
+     *
      * @return FakturaVydana
      */
-    public function report() {
+    public function report()
+    {
         $this->logBanner('Report Initiated. From: ' . $this->since->format('c') . ' To: ' . $this->until->format('c'));
         $entries = 0;
         $invoiceItems = [];
@@ -309,7 +317,7 @@ class Importer extends FakturaVydana {
         $durations = [];
 
         foreach ($this->workspaces as $wsname => $workspace) {
-            $this->addStatusMessage('Workspace: ' . (is_string($wsname) ? $wsname . ' ' : '' ) . $workspace, 'info');
+            $this->addStatusMessage('Workspace: ' . (is_string($wsname) ? $wsname . ' ' : '') . $workspace, 'info');
 
             $detailsData = $this->getAllDetailPages();
 
@@ -331,8 +339,8 @@ class Importer extends FakturaVydana {
                 $projects[$project] = $project;
             }
         }
-//            'popis' => sprintf(_('Work from %s to %s'), $this->since->format('Y-m-d'), $this->until->format('Y-m-d')),
-//            'poznam' => 'Kimai Workspace: ' . implode(',', $this->workspaces)
+        //            'popis' => sprintf(_('Work from %s to %s'), $this->since->format('Y-m-d'), $this->until->format('Y-m-d')),
+        //            'poznam' => 'Kimai Workspace: ' . implode(',', $this->workspaces)
 
         $this->addStatusMessage($entries . ' entries processed');
 
