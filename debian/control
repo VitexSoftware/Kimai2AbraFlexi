@@ -8,7 +8,7 @@ Homepage: https://github.com/VitexSoftware/Kimai2AbraFlexi/settings
 
 Package: abraflexi-kimai-importer
 Multi-Arch: foreign
-Depends: ${misc:Depends}, php-cli, php-imap, php-zip, php-spojenet-abraflexi, 
+Depends: ${misc:Depends}, php-cli, php-imap, php-zip, php-spojenet-abraflexi,php-gd
 Suggests: abraflexi-server,php-abraflexi-config, abraflexi-digest, abraflexi-matcher, abraflexi-reminder, abraflexi-contract-invoices, multi-abraflexi-setup, kimaidesktop 
 Architecture: all
 Description: issue AbraFlexi invoice using Kimai Time Entries
