@@ -32,7 +32,7 @@ $cfgKeys = [
 
 $configured = true;
 foreach ($cfgKeys as $cfgKey) {
-    if (empty(\Ease\Functions::cfg($cfgKey))) {
+    if (empty(\Ease\Shared::cfg($cfgKey))) {
         fwrite(STDERR, 'Requied configuration ' . $cfgKey . " is not set." . PHP_EOL);
         $configured = false;
     }
@@ -44,7 +44,7 @@ if ($configured === false) {
 $engine = new Importer();
 $engine->import();
 
-if (\Ease\Functions::cfg('INVOICE_DOWNLOAD') && \Ease\Functions::cfg('REPORTS_DIR')) {
-    $engine->addStatusMessage(sprintf(_('Invoice saved as %s'), $engine->downloadInFormat('pdf', \Ease\Functions::cfg('REPORTS_DIR'))));
-    $engine->addStatusMessage(sprintf(_('Invoice saved as %s'), $engine->downloadInFormat('isdocx', \Ease\Functions::cfg('REPORTS_DIR'))));
+if (\Ease\Shared::cfg('INVOICE_DOWNLOAD') && \Ease\Shared::cfg('REPORTS_DIR')) {
+    $engine->addStatusMessage(sprintf(_('Invoice saved as %s'), $engine->downloadInFormat('pdf', \Ease\Shared::cfg('REPORTS_DIR'))));
+    $engine->addStatusMessage(sprintf(_('Invoice saved as %s'), $engine->downloadInFormat('isdocx', \Ease\Shared::cfg('REPORTS_DIR'))));
 }

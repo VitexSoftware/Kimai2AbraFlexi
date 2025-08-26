@@ -13,7 +13,7 @@ use AbraFlexi\Priloha;
 use AbraFlexi\RO;
 use DateTime;
 use Ease\Exception;
-use Ease\Functions;
+use Ease\Shared;
 
 /**
  * Description of Importer
@@ -71,8 +71,8 @@ class Importer extends FakturaVydana
     {
         $this->defaultUrlParams;
         parent::__construct($init, $options);
-        $this->scopeToInterval(Functions::cfg('KIMAI_SCOPE', 'last_month'));
-        $this->config = \Fiteco\KimaiClient\Configuration::getDefaultConfiguration()->setHost(Functions::cfg('KIMAI_HOST'))->setApiKey('X-AUTH-USER', Functions::cfg('KIMAI_USER'))->setApiKey('X-AUTH-TOKEN', Functions::cfg('KIMAI_TOKEN'));
+        $this->scopeToInterval(Shared::cfg('KIMAI_SCOPE', 'last_month'));
+        $this->config = \Fiteco\KimaiClient\Configuration::getDefaultConfiguration()->setHost(Shared::cfg('KIMAI_HOST'))->setApiKey('X-AUTH-USER', Shared::cfg('KIMAI_USER'))->setApiKey('X-AUTH-TOKEN', Shared::cfg('KIMAI_TOKEN'));
 
         $this->kimaiTimesheets = new \Fiteco\KimaiClient\Api\TimesheetApi(new \GuzzleHttp\Client(), $this->config);
 
@@ -219,10 +219,10 @@ class Importer extends FakturaVydana
 
         $this->takeItemsFromArray($invoiceItems);
 
-        $cc = empty(\Ease\Functions::cfg('ABRAFLEXI_CC')) ? '' : "\n" . 'cc:' . \Ease\Functions::cfg('ABRAFLEXI_CC');
+        $cc = empty(\Ease\Shared::cfg('ABRAFLEXI_CC')) ? '' : "\n" . 'cc:' . \Ease\Shared::cfg('ABRAFLEXI_CC');
         $this->setData([
-            'typDokl' => RO::code(empty(Functions::cfg('ABRAFLEXI_TYP_FAKTURY')) ? 'FAKTURA' : Functions::cfg('ABRAFLEXI_TYP_FAKTURY')),
-            'firma' => RO::code(Functions::cfg('ABRAFLEXI_CUSTOMER')),
+            'typDokl' => RO::code(empty(Shared::cfg('ABRAFLEXI_TYP_FAKTURY')) ? 'FAKTURA' : Shared::cfg('ABRAFLEXI_TYP_FAKTURY')),
+            'firma' => RO::code(Shared::cfg('ABRAFLEXI_CUSTOMER')),
             'popis' => sprintf(_('Work from %s to %s'), $this->since->format('Y-m-d'), $this->until->format('Y-m-d')),
             'duzpPuv' => RO::dateToFlexiDate($this->until)
         ]);
@@ -345,7 +345,7 @@ class Importer extends FakturaVydana
         $this->addStatusMessage($entries . ' entries processed');
 
         $fromto = $this->since->format('Y-m-d') . '_' . $this->until->format('Y-m-d');
-        $saveto = \Ease\Functions::cfg('REPORTS_DIR');
+        $saveto = \Ease\Shared::cfg('REPORTS_DIR');
 
         $tasksCsv = $saveto . sprintf(_('tasks_timesheet_%s.csv'), $fromto);
         $this->addStatusMessage($tasksCsv, file_put_contents($tasksCsv, Reporter::csvReport($invoiceItems)) ? 'success' : 'error');
