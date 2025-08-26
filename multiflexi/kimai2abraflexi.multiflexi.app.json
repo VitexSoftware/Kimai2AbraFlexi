@@ -7,11 +7,11 @@
     "cmdparams": "",
     "deploy": "apt install abraflexi-kimai-importer",
     "homepage": "https://github.com/VitexSoftware/Kimai2AbraFlexi",
-    "requirements": "AbraFlexi,Kimai",
+    "requirements": ["AbraFlexi", "Kimai"],
     "ociimage": "",
-    "version": "",
+    "version": "1.0.0",
     "uuid": "89e98c33-c6a3-436e-963f-c35ba04e83ae",
-    "topics": "Kimai,AbraFlexi,Importer,Invoice,Generator",
+    "topics": ["Kimai", "AbraFlexi", "Importer", "Invoice", "Generator"],
     "environment": {
         "ABRAFLEXI_CC": {
             "type": "text",
