@@ -17,7 +17,7 @@ Description: issue AbraFlexi invoice using Kimai Time Entries
  time records within given scope into invoice with items grouped by Clients.
 
 Package: multiflexi-abraflexi-kimai-importer
-Depends: abraflexi-kimai-importer, multiflexi
+Depends: abraflexi-kimai-importer, multiflexi-cli
 Architecture: all
 Section: office
 Priority: optional
