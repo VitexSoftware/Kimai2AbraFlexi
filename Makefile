@@ -11,3 +11,16 @@ buildx:
 
 drun:
 	docker run --env-file .env docker.io/vitexsoftware/kimai2abraflexi:latest
+
+.PHONY: validate-multiflexi-app
+validate-multiflexi-app: ## Validates the multiflexi JSON
+	@if [ -d multiflexi ]; then \
+		for file in multiflexi/*.multiflexi.app.json; do \
+			if [ -f "$$file" ]; then \
+				echo "Validating $$file"; \
+				multiflexi-cli app validate-json --file="$$file"; \
+			fi; \
+		done; \
+	else \
+		echo "No multiflexi directory found"; \
+	fi
