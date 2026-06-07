@@ -1,0 +1,14 @@
+#!/bin/sh
+# postinst script for abraflexi-kimai-importer
+
+set -e
+
+if [ "$1" = "configure" ]; then
+
+    . /usr/share/debconf/confmodule
+fi
+
+
+#DEBHELPER#
+
+exit 0

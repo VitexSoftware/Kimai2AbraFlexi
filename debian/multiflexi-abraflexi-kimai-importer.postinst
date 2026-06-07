@@ -4,7 +4,10 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-for file in `ls /usr/lib/abraflexi-kimai-importer/multiflexi/*.json`
+for file in /usr/lib/abraflexi-kimai-importer/multiflexi/*.json
 do
-	multiflexi-cli application import-json --file $file
+	[ -s "$file" ] || continue
+	multiflexi-cli application:import-json --file="$file"
 done
+
+#DEBHELPER#
