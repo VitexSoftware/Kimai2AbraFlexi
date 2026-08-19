@@ -1,4 +1,4 @@
-# WARP.md - Working AI Reference for Kimai2AbraFlexi
+# AGENTS.md - Working AI Reference for Kimai2AbraFlexi
 
 ## Project Overview
 **Type**: PHP Project/Debian Package
